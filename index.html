@@ -2,12 +2,18 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Be My Valentine 💖</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:"Poppins",sans-serif}
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:"Poppins",sans-serif;
+}
 
 body{
   height:100vh;
@@ -24,6 +30,8 @@ body{
   position:absolute;
   animation:float 6s linear infinite;
   opacity:.7;
+  z-index:1;
+  pointer-events:none;
 }
 @keyframes float{
   from{transform:translateY(100vh)}
@@ -56,7 +64,10 @@ body{
 }
 
 /* Buttons */
-.buttons{position:relative;height:90px}
+.buttons{
+  position:relative;
+  height:90px;
+}
 button{
   padding:12px 26px;
   border-radius:30px;
@@ -65,13 +76,19 @@ button{
   cursor:pointer;
   transition:.3s;
 }
-#yes{background:#38b000;color:#fff}
-#yes:hover{transform:scale(1.1)}
+#yes{
+  background:#38b000;
+  color:#fff;
+}
+#yes:hover{
+  transform:scale(1.1);
+}
 #no{
   background:#d00000;
   color:#fff;
   position:absolute;
-  right:0;top:0;
+  right:0;
+  top:0;
 }
 
 /* 💍 Ring */
@@ -91,9 +108,10 @@ button{
   font-size:16px;
   color:#fff;
   margin-top:15px;
+  white-space:normal;
 }
 
-/* 🌙 Dark mode after YES */
+/* 🌙 Dark mode */
 .dark{
   background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
 }
@@ -104,7 +122,7 @@ button{
 
 <!-- 💕 Floating hearts -->
 <script>
-for(let i=0;i<15;i++){
+for(let i=0;i<18;i++){
   const h=document.createElement("div");
   h.className="heart";
   h.innerHTML=["💖","💘","💕","💗","💞"][Math.floor(Math.random()*5)];
@@ -120,14 +138,13 @@ for(let i=0;i<15;i++){
   <p id="sub">Every moment with you feels like magic ✨</p>
 
   <!-- 🖼️ ADD YOUR PHOTOS HERE -->
-  <!-- Put images in repo & rename below -->
   <div class="gallery">
-    <img src="3b5d28a7-dc5f-4ad3-af56-6f9184abe8e7.jpeg">
-    <img src="4fb172b9-e73c-4a3c-b360-2fc53ffa606d.jpeg">
-    <img src="IMG_0252.jpeg">
-    <img src="IMG_0257.jpeg">
-    <img src="IMG_2688.jpeg">
-    <img src="IMG_6151.jpeg">
+    <img src="3b5d28a7-dc5f-4ad3-af56-6f9184abe8e7.jpeg" alt="Memory 1">
+    <img src="4fb172b9-e73c-4a3c-b360-2fc53ffa606d.jpeg" alt="Memory 2">
+    <img src="IMG_0252.jpeg" alt="Memory 3">
+    <img src="IMG_0257.jpeg" alt="Memory 4">
+    <img src="IMG_2688.jpeg" alt="Memory 5">
+    <img src="IMG_6151.jpeg" alt="Memory 6">
   </div>
 
   <div class="buttons" id="buttons">
@@ -138,8 +155,7 @@ for(let i=0;i<15;i++){
   <div id="ring">💍</div>
   <div id="loveText"></div>
 
-  <!-- 🎵 Music (add your own mp3 in repo) -->
-  <!-- Replace love.mp3 with your song -->
+  <!-- 🎵 MUSIC -->
   <audio id="music" src="love.mp3"></audio>
 </div>
 
@@ -151,12 +167,14 @@ const loveText=document.getElementById("loveText");
 const ring=document.getElementById("ring");
 const music=document.getElementById("music");
 
-/* 😈 No button trolling */
-no.addEventListener("mouseover",()=>{
+/* 😈 No button trolling (desktop + mobile) */
+function moveNo(){
   const r=box.getBoundingClientRect();
-  no.style.left=Math.random()*(r.width-80)+"px";
-  no.style.top=Math.random()*(r.height-120)+"px";
-});
+  no.style.left=Math.random()*(r.width-90)+"px";
+  no.style.top=Math.random()*(r.height-140)+"px";
+}
+no.addEventListener("mouseover",moveNo);
+no.addEventListener("touchstart",moveNo);
 
 /* 💖 YES clicked */
 yes.addEventListener("click",()=>{
@@ -167,9 +185,11 @@ yes.addEventListener("click",()=>{
 
   ring.style.display="block";
   loveText.style.display="block";
-  music.play();
 
-  typeText("Thank you for choosing me Adrija ❤️💍\nYou are my today, my tomorrow, and my forever 💖");
+  music.volume=0.7;
+  music.play().catch(()=>{});
+
+  typeText("Thank you for choosing me Adrija ❤️💍<br>You are my today, my tomorrow, and my forever 💖");
 });
 
 /* 💌 Typewriter */
@@ -180,7 +200,7 @@ function typeText(text){
     loveText.innerHTML+=text.charAt(i);
     i++;
     if(i>=text.length) clearInterval(interval);
-  },60);
+  },55);
 }
 </script>
 
